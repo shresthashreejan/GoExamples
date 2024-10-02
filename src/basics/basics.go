@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func main() {
 	helloWorld()
@@ -64,6 +66,12 @@ func main() {
 		func(a, b int) int {
 			return (a + b) * 2
 		}(10, 2))
+
+	fmt.Println(sentenceFactory("the")("what", "hell"))
+
+	deferConcept()
+
+	concurrencyConcept()
 }
 
 func helloWorld() {
@@ -115,4 +123,30 @@ func functionName(params) (returnType, returnType) {} || func functionName(param
 */
 func sumAndDifference(a, b int) (sum, difference int) {
 	return a + b, a - b
+}
+
+func sentenceFactory(input string) func(before, after string) string {
+	return func(before, after string) string {
+		return fmt.Sprintf("%s %s %s", before, input, after)
+	}
+}
+
+func deferConcept() bool {
+	defer fmt.Println("deferred statements execute in LIFO sequence")
+	defer fmt.Println("This line is executed first because")
+	return true
+}
+
+func inc(i int, c chan int) {
+	c <- i + 1 // <- is the "send" operator when a channel appears on the left.
+}
+
+func concurrencyConcept() {
+	c := make(chan int)
+
+	go inc(0, c)
+	go inc(10, c)
+	go inc(-805, c)
+
+	fmt.Println(<-c, <-c, <-c)
 }
