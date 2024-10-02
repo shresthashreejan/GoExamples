@@ -72,6 +72,8 @@ func main() {
 	deferConcept()
 
 	concurrencyConcept()
+
+	fmt.Println(variadicSum(1, 2, 3, 4, 5))
 }
 
 func helloWorld() {
@@ -149,4 +151,15 @@ func concurrencyConcept() {
 	go inc(-805, c)
 
 	fmt.Println(<-c, <-c, <-c)
+}
+
+// Variadic functions
+func variadicSum(nums ...int) int {
+	total := 0
+	fmt.Println(len(nums))
+	// underscore ignores index while iterating, and focuses on the actual values in the slice
+	for _, num := range nums {
+		total += num
+	}
+	return total
 }
