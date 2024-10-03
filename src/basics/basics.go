@@ -18,6 +18,7 @@ func main() {
 
 	a4_cpy := a4
 	a4_cpy[0] = 1 // Only a4_cpy is changed, a4_cpy and a4 are two separate instances
+	fmt.Println(a4_cpy == a4)
 
 	// Slices
 	s3 := []int{1, 2, 3}
@@ -74,6 +75,27 @@ func main() {
 	concurrencyConcept()
 
 	fmt.Println(variadicSum(1, 2, 3, 4, 5))
+
+	// Anonymous functions can be recursive, but requires explicit declaration
+	var diffFn func(m, n int) int
+
+	diffFn = func(m, n int) int {
+		if m <= n {
+			fmt.Println("Invalid input.")
+			return 0
+		}
+		return diffFn(m-2, n-1)
+	}
+
+	fmt.Println(diffFn(3, 2))
+
+	x := 1
+	fmt.Println("Initial value: ", x)
+	zeroval(x)
+	fmt.Println("after zeroval: ", x)
+	zeroptr(&x)
+	fmt.Println("after zeroptr: ", x)
+	fmt.Println("pointer: ", &x)
 }
 
 func helloWorld() {
@@ -162,4 +184,12 @@ func variadicSum(nums ...int) int {
 		total += num
 	}
 	return total
+}
+
+func zeroval(ival int) {
+	ival = 0
+}
+
+func zeroptr(iptr *int) {
+	*iptr = 0
 }
